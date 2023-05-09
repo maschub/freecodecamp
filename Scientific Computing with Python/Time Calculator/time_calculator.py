@@ -11,17 +11,9 @@ def add_time(start, duration, starting_day=""):
     except ValueError:
         return "Error: Please check your time to add."
 
-    weekday_mapper = {
-        'monday': 0,
-        'tuesday': 1,
-        'wednesday': 2,
-        'thursday': 3,
-        'friday': 4,
-        'saturday': 5,
-        'sunday': 6
-    }
+    weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
-    if starting_day and starting_day.lower() not in weekday_mapper:
+    if starting_day and starting_day.capitalize() not in weekdays:
         return "Error: You entered an unknown weekday."
 
     start_time, start_segment = start.split()
@@ -55,9 +47,8 @@ def add_time(start, duration, starting_day=""):
         day_hint = ""
 
     if starting_day:
-        weekday_index = weekday_mapper[starting_day.lower()]
-        weekday_index = (day_counter + weekday_index) % 7
-        new_weekday = f", {str([*weekday_mapper][weekday_index%7]).capitalize()}"
+        weekday_index = (day_counter + weekdays.index(starting_day.capitalize())) % 7
+        new_weekday = f", {weekdays[weekday_index%7]}"
     else:
         new_weekday = ""
 
