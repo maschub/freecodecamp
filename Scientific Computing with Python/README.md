@@ -6,7 +6,7 @@ In the Scientific Computing with Python Certification, you'll learn Python funda
 ### Scientific Computing with Python Projects
 Time to put your Python skills to the test. By completing these projects, you will demonstrate that you have a good foundational knowledge of Python and qualify for the Scientific Computing with Python Certification.
  - [Arithmetic Formatter](https://github.com/maschub/freecodecamp/tree/main/Scientific%20Computing%20with%20Python/Arithmetic%20Formatter)
- - Time Calculator
+ - [Time Calculator](https://github.com/maschub/freecodecamp/tree/main/Scientific%20Computing%20with%20Python/Time%20Calculator)
  - Budget App
  - Polygon Area Calculator
  - Probability Calculator
