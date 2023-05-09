@@ -36,8 +36,8 @@ def add_time(start, duration, starting_day=""):
         start_hour += 1
         start_minute -= 60
         if start_hour == 12:
-            start_segment, daychanged = toggle_twelve_hour(start_segment)
-            if daychanged:
+            start_segment, day_changed = toggle_twelve_hour(start_segment)
+            if day_changed:
                 day_counter += 1
 
     while duration_hours > 0:
@@ -45,19 +45,19 @@ def add_time(start, duration, starting_day=""):
         duration_hours -= 1
 
         if start_hour == 12:
-            start_segment, daychanged = toggle_twelve_hour(start_segment)
-            if daychanged:
+            start_segment, day_changed = toggle_twelve_hour(start_segment)
+            if day_changed:
                 day_counter += 1
 
         if start_hour == 13:
             start_hour -= 12
 
     if day_counter == 1:
-        dayhint = " (next day)"
+        day_hint = " (next day)"
     elif day_counter > 1:
-        dayhint = f" ({day_counter} days later)"
+        day_hint = f" ({day_counter} days later)"
     else:
-        dayhint = ""
+        day_hint = ""
 
     if starting_day:
         weekday_index = weekday_mapper[starting_day.lower()]
@@ -68,19 +68,19 @@ def add_time(start, duration, starting_day=""):
     else:
         new_weekday = ""
 
-    new_time = f'{start_hour}:{start_minute:02d} {start_segment}{new_weekday}{dayhint}'
+    new_time = f'{start_hour}:{start_minute:02d} {start_segment}{new_weekday}{day_hint}'
 
     return new_time
 
 
 def toggle_twelve_hour(segment):
-    daychanged = False
+    day_changed = False
     if segment == "PM":
         segment = "AM"
-        daychanged = True
+        day_changed = True
     else:
         segment = "PM"
-    return (segment, daychanged)
+    return segment, day_changed
 
 
 if __name__ == '__main__':
