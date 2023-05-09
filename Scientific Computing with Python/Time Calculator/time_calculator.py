@@ -1,5 +1,5 @@
 def add_time(start, duration, starting_day=""):
-    # error handling will not be performed only on start variable
+    # error handling will not be performed on start variable
     # project reads "Assume that the start time are valid times"
     try:
         duration_hours, duration_minutes = [int(x) for x in duration.split(':')]
