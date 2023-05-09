@@ -72,6 +72,7 @@ def add_time(start, duration, starting_day=""):
 
     return new_time
 
+
 def toggle_twelve_hour(segment):
     daychanged = False
     if segment == "PM":
@@ -80,6 +81,7 @@ def toggle_twelve_hour(segment):
     else:
         segment = "PM"
     return (segment, daychanged)
+
 
 if __name__ == '__main__':
     print(add_time("6:30 PM", "205:12"))
