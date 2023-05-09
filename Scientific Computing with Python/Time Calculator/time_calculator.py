@@ -24,10 +24,8 @@ def add_time(start, duration, starting_day=""):
     if starting_day and starting_day.lower() not in weekday_mapper:
         return "Error: You entered an unknown weekday."
 
-    start_hour, start_minute = start.split(':')
-    start_minute, start_segment = start_minute.split()
-    start_hour = int(start_hour)
-    start_minute = int(start_minute)
+    start_time, start_segment = start.split()
+    start_hour, start_minute = [int(x) for x in start_time.split(':')]
 
     day_counter = 0
     start_minute = duration_minutes + start_minute
