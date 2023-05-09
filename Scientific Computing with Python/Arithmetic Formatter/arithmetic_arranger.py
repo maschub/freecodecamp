@@ -1,70 +1,52 @@
-def arithmetic_arranger(problems, solve_problem = False):
+def arithmetic_arranger(problems, solve_problem=False):
     # error handling
     if len(problems) > 5:
         return "Error: Too many problems."
     for problem in problems:
         try:
-            value1, operand, value2 = problem.split(' ')
+            operand1, operator, operand2 = problem.split(' ')
         except:
             return "Error: Invalid problem format."
-        if operand not in ['+', '-']:
+        if operator not in ['+', '-']:
             return "Error: Operator must be '+' or '-'."
         try:
-            value1 = int(value1)
-            value2 = int(value2)
+            operand1 = int(operand1)
+            operand2 = int(operand2)
         except:
             return "Error: Numbers must only contain digits."
-        if value1 > 9999 or value2 > 9999:
+        if operand1 > 9999 or operand2 > 9999:
             return "Error: Numbers cannot be more than four digits."
 
-    arranged_problems = "first_line\nsecond_line\ndash_line\nresult_line"
+    top_line = []
+    bottom_line = []
+    dash_line = []
+    result_line = []
     for problem in problems:
-        # could be done while error handling. But would not be that pretty
-        value1, operand, value2 = problem.split(' ')
-        if len(value1) > len(value2):
-            arranged_problems_len = len(value1)
+        # could be done while error handling. But let's keep it separated for readability
+        operand1, operator, operand2 = problem.split(' ')
+        if len(operand1) > len(operand2):
+            arranged_problems_len = len(operand1)
         else:
-            arranged_problems_len = len(value2)
-        result = ""
+            arranged_problems_len = len(operand2)
         if solve_problem:
-            if operand == '+':
-                result = int(value1) + int(value2)
+            if operator == '+':
+                result = int(operand1) + int(operand2)
             else:
-                result = int(value1) - int(value2)
-            # arranged_problems_len+2 to add room for operand and space
-            result = f"{str(result).rjust(arranged_problems_len+2)}"
-        arranged_problems = arranged_problems.replace(
-            'first_line', f'{value1.rjust(arranged_problems_len + 2)}    first_line'
-        )
-        arranged_problems = arranged_problems.replace(
-            'second_line', f'{operand} {value2.rjust(arranged_problems_len)}    second_line'
-        )
-        arranged_problems = arranged_problems.replace(
-            'dash_line', f'{"".rjust(arranged_problems_len+2, "-")}    dash_line'
-        )
-        arranged_problems = arranged_problems.replace(
-            'result_line', f'{result}    result_line'
-        )
-    arranged_problems = arranged_problems.replace(
-        '    first_line', ''
-    )
-    arranged_problems = arranged_problems.replace(
-        '    second_line', ''
-    )
-    if not solve_problem:
-        arranged_problems = arranged_problems.replace(
-            '    dash_line\n    ', ''
-        )
-    else:
-        arranged_problems = arranged_problems.replace(
-            '    dash_line', ''
-        )
-    arranged_problems = arranged_problems.replace(
-        '    result_line', ''
-    )
-    arranged_problems = arranged_problems.rstrip()
-
+                result = int(operand1) - int(operand2)
+            # arranged_problems_len+2 to add room for operator and space
+            result_line.append(f"{str(result).rjust(arranged_problems_len+2)}")
+        top_line.append(f'{operand1.rjust(arranged_problems_len + 2)}')
+        bottom_line.append(f'{operator} {operand2.rjust(arranged_problems_len)}')
+        dash_line.append(f'{"".rjust(arranged_problems_len+2, "-")}')
+    top_line = '    '.join(top_line)
+    bottom_line = '    '.join(bottom_line)
+    dash_line = '    '.join(dash_line)
+    arranged_problems = '\n'.join([top_line, bottom_line, dash_line])
+    if solve_problem:
+        result_line = '    '.join(result_line)
+        arranged_problems = f'{arranged_problems}\n{result_line}'
     return arranged_problems
+
 
 if __name__ == "__main__":
     print(arithmetic_arranger(['11 + 4', '3801 - 2999', '1 + 2', '123 + 49', '1 - 9380'], True))
