@@ -1,7 +1,6 @@
 def add_time(start, duration, starting_day=""):
     # error handling will not be performed only on start variable
     # project reads "Assume that the start time are valid times"
-
     try:
         duration_hours, duration_minutes = [int(x) for x in duration.split(':')]
         if any([
@@ -9,7 +8,7 @@ def add_time(start, duration, starting_day=""):
             duration_minutes >= 60
         ]):
             raise
-    except:
+    except ValueError:
         return "Error: Please check your time to add."
 
     weekday_mapper = {
@@ -33,21 +32,19 @@ def add_time(start, duration, starting_day=""):
     day_counter = 0
     start_minute = duration_minutes + start_minute
     if start_minute >= 60:
-        start_hour += 1
+        duration_hours += 1
         start_minute -= 60
-        if start_hour == 12:
-            start_segment, day_changed = toggle_twelve_hour(start_segment)
-            if day_changed:
-                day_counter += 1
 
     while duration_hours > 0:
         start_hour += 1
         duration_hours -= 1
 
         if start_hour == 12:
-            start_segment, day_changed = toggle_twelve_hour(start_segment)
-            if day_changed:
+            if start_segment == "PM":
+                start_segment = "AM"
                 day_counter += 1
+            else:
+                start_segment = "PM"
 
         if start_hour == 13:
             start_hour -= 12
@@ -71,16 +68,6 @@ def add_time(start, duration, starting_day=""):
     new_time = f'{start_hour}:{start_minute:02d} {start_segment}{new_weekday}{day_hint}'
 
     return new_time
-
-
-def toggle_twelve_hour(segment):
-    day_changed = False
-    if segment == "PM":
-        segment = "AM"
-        day_changed = True
-    else:
-        segment = "PM"
-    return segment, day_changed
 
 
 if __name__ == '__main__':
