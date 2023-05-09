@@ -58,9 +58,7 @@ def add_time(start, duration, starting_day=""):
 
     if starting_day:
         weekday_index = weekday_mapper[starting_day.lower()]
-        while day_counter > 0:
-            weekday_index += 1
-            day_counter -= 1
+        weekday_index = (day_counter + weekday_index) % 7
         new_weekday = f", {str([*weekday_mapper][weekday_index%7]).capitalize()}"
     else:
         new_weekday = ""
@@ -71,4 +69,4 @@ def add_time(start, duration, starting_day=""):
 
 
 if __name__ == '__main__':
-    print(add_time("6:30 PM", "205:12"))
+    print(add_time("6:30 PM", "205:12", "Thursday"))
