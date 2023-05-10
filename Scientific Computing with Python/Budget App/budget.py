@@ -8,9 +8,9 @@ class Category:
         output = str(self.name).center(30, "*")
         for line in self.ledger:
             amount = f"{line['amount']:.2f}"
-            output = f"{output}\n{line['description'][:23].ljust(23,' ')}{amount.rjust(7)}"
+            output += f"\n{line['description'][:23].ljust(23,' ')}{amount.rjust(7)}"
 
-        output = f"{output}\nTotal: {self.balance:.2f}"
+        output += f"\nTotal: {self.balance:.2f}"
         return output
 
     def deposit(self, amount, description=""):
@@ -28,7 +28,8 @@ class Category:
                 "description": description
             })
             return True
-        return False
+        else:
+            return False
 
     def get_balance(self):
         return self.balance
@@ -41,7 +42,7 @@ class Category:
             return False
 
     def check_funds(self, amount):
-        return float(amount) <= self.balance
+        return amount <= self.balance
 
 
 def create_spend_chart(categories):
@@ -58,21 +59,21 @@ def create_spend_chart(categories):
         expenses[category.name] = round(category_sum, 2)
     expenses_sum = sum(expenses.values())
     for i in range(100, -10, -10):
-        output = f"{output}\n{str(i).rjust(3)}|"
+        output += f"\n{str(i).rjust(3)}|"
         for value in expenses.values():
             if value / expenses_sum * 100 >= i:
-                output = f"{output} o "
+                output += " o "
             else:
-                output = f"{output}   "
-        output = f"{output} "
-    output = f"{output}\n    {''.rjust(len(categories)*3+1, '-')}"
+                output += "   "
+        output += " "
+    output += f"\n    {''.rjust(len(categories)*3+1, '-')}"
     for char in range(0, longest_cat):
-        output = f"{output}\n    "
+        output += "\n    "
         for category in categories:
             try:
-                output = f"{output}{category.name[char].center(3)}"
+                output += category.name[char].center(3)
             except IndexError:
-                output = f"{output}   "
-        output = f"{output} "
+                output += "   "
+        output += " "
 
     return output
